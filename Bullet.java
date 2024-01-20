@@ -1,0 +1,101 @@
+import java.awt.image.BufferedImage; 
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.awt.Graphics;
+import javax.swing.*;
+import java.util.Arrays;
+
+public class Bullet {
+
+  private int numBullets = 40;    
+  private int[] bulletX = new int[numBullets];
+  private int[] bulletY = new int[numBullets];
+  private int[] bulletDirectionH = new int[numBullets];
+  private int[] bulletDirectionV = new int[numBullets];
+  private boolean[] bulletVisible = new boolean[numBullets];
+  private int bulletW = 6;
+  private int bulletH = 10;
+  private int currentBullet = 0;
+  private int bulletSpeed = 10;
+  
+  private BufferedImage bulletSprite;
+  
+  public Bullet(){
+    loadSprite();
+    Arrays.fill(bulletX,0);
+    Arrays.fill(bulletY,0);
+    Arrays.fill(bulletVisible, false);
+  }
+  
+  public void shoot(Player p){
+    for (int i=0; i<numBullets; i++){
+      if (bulletVisible[i]){
+        bulletX[i] = bulletX[i] + bulletDirectionH[i] + p.getXDirection();
+        bulletY[i] = bulletY[i] + bulletDirectionV[i] + p.getYDirection();
+        if (bulletX[i]<p.getX() || bulletX[i]>(p.getX()+p.backgroundW) || bulletY[i]<p.getY() || bulletY[i]>(p.getY()+p.backgroundH))
+          bulletVisible[i] = false;
+      }
+    }    
+  }
+  
+  public void loadSprite() {
+     try {
+     bulletSprite = ImageIO.read(new File("bulletSprite.png"));
+
+     } catch(Exception e) { 
+       System.out.println("error loading sprite");};
+   }
+  
+  public void drawBullet(Graphics g){
+    for (int i=0; i<numBullets; i++){
+      if (bulletVisible[i]){
+            for (int j=0; j<numBullets; j++){
+                if (bulletVisible[i])
+                    g.fillOval(bulletX[i],bulletY[i],bulletW,bulletH);
+            }
+      }
+    }
+  }
+  
+  public void setBulletX(int x){
+    this.bulletX[this.currentBullet] = x;
+  }
+  
+  public void setBulletY(int y){
+    this.bulletY[this.currentBullet] = y;
+  }
+  
+  public void setBulletVisible(boolean visible){
+    this.bulletVisible[this.currentBullet] = visible;
+  }
+  
+  
+  public void setBulletDirectionH(int index){
+    if (index == 1){
+      this.bulletDirectionH[this.currentBullet] = bulletSpeed;
+    }
+    else if (index == 2){
+      this.bulletDirectionH[this.currentBullet] = bulletSpeed*(-1);
+    }
+    this.bulletDirectionV[this.currentBullet] = 0;  
+  }
+  
+  
+  public void setBulletDirectionV(int index){
+    if (index == 1){
+      this.bulletDirectionV[this.currentBullet] = bulletSpeed;
+    }
+    else if (index == 2){
+      this.bulletDirectionV[this.currentBullet] = bulletSpeed*(-1);
+    }
+    this.bulletDirectionH[this.currentBullet] = 0;
+  }
+  
+  
+  public void setCurrentBullet(){
+    this.currentBullet = (currentBullet + 1)%numBullets;
+  }
+  
+}
+    
+ 

@@ -1,0 +1,94 @@
+  // class for the keyboard listener - this detects key presses and runs the corresponding code
+
+//Keyboard imports
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+public class PlayerKeyListener implements KeyListener {
+  
+  //reference to items effected by keyboard press
+  private Player player;
+  private Bullet bullet;
+  private Enemy enemy;
+    
+    PlayerKeyListener(Player p, Bullet b) {
+      player = p;
+      bullet = b;
+    }
+    
+    public void keyPressed(KeyEvent e) {  
+        
+      if(e.getKeyChar() == 'a'){   
+        player.setXDirection(5);     
+        
+      } else if(e.getKeyChar() == 's'){
+        player.setYDirection(-5);
+        
+      } else if(e.getKeyChar() == 'd') {
+        player.setXDirection(-5);
+    
+      } else if(e.getKeyChar() == 'w'){
+        player.setYDirection(5);
+        
+      } else if(e.getKeyCode() == KeyEvent.VK_RIGHT){
+        
+        bullet.setBulletX(550);
+        bullet.setBulletY(768/2+62);
+        bullet.setBulletVisible(true);
+        bullet.setCurrentBullet();
+        bullet.setBulletDirectionH(1);
+        
+          
+      } else if(e.getKeyCode() == KeyEvent.VK_LEFT){
+
+        bullet.setBulletX(550);
+        bullet.setBulletY(768/2+62);
+        bullet.setBulletVisible(true);
+        bullet.setCurrentBullet();
+        bullet.setBulletDirectionH(2);
+        
+          
+      } else if(e.getKeyCode() == KeyEvent.VK_UP){
+
+        bullet.setBulletX(550);
+        bullet.setBulletY(768/2+62);
+        bullet.setBulletVisible(true);
+        bullet.setCurrentBullet();
+        bullet.setBulletDirectionV(2);
+        
+        
+      } else if(e.getKeyCode() == KeyEvent.VK_DOWN){
+        
+        bullet.setBulletX(550);
+        bullet.setBulletY(768/2+62);
+        bullet.setBulletVisible(true);
+        bullet.setCurrentBullet();
+        bullet.setBulletDirectionV(1);
+       
+          
+      }
+ 
+    }
+
+    
+      public void keyTyped(KeyEvent e) {  
+      }
+      
+      
+      
+      public void keyReleased(KeyEvent e) {
+        if(e.getKeyChar() == 'a' ){   
+          player.setXDirection(0);     
+          
+        } else if(e.getKeyChar() == 's' ){
+          player.setYDirection(0);
+          
+        } else if(e.getKeyChar() == 'd' ){
+          player.setXDirection(0);
+          
+        } else if(e.getKeyChar() == 'w' ){
+          player.setYDirection(0);
+        }
+      }
+      
+  } //end of keyboard listener
